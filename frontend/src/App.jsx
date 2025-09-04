@@ -18,41 +18,63 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="bg-white shadow-lg border-b-2" style={{borderBottomColor: colors.teal}}>
+      <nav 
+        className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b shadow-[0_2px_12px_rgba(0,0,0,0.06)]"
+        style={{ borderBottomColor: colors.teal }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <div className="flex items-center">
-              {/* Larger Logo as requested */}
-              <img src={homesnapperLogo} alt="HomeSnapper" className="h-14 w-auto" />
+            <div className="flex items-center gap-3">
+              <img src={homesnapperLogo} alt="HomeSnapper" className="h-16 w-auto" />
+              <div className="hidden sm:block">
+                <p className="text-sm font-medium text-gray-600">Spot. Snap. Earn.</p>
+              </div>
             </div>
             <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                <a href="#how-it-works" className="text-lg font-semibold hover:text-opacity-80 transition-colors" 
-                   style={{color: colors.teal}}>
-                  How It Works
-                </a>
-                <a href="#reviews" className="text-lg font-semibold hover:text-opacity-80 transition-colors" 
-                   style={{color: colors.teal}}>
-                  Reviews
-                </a>
-                <a href="#faq" className="text-lg font-semibold hover:text-opacity-80 transition-colors" 
-                   style={{color: colors.teal}}>
-                  FAQ
-                </a>
-                <Button className="ml-4 px-6 py-2 rounded-lg font-semibold text-white hover:opacity-90 transition-opacity" 
-                        style={{backgroundColor: colors.teal}}>
-                  Login
+              <div className="ml-10 flex items-center space-x-2">
+                <div className="relative group">
+                  <a
+                    href="#how-it-works"
+                    className="px-3 py-2 text-lg font-semibold text-homesnapper-teal transition-colors"
+                  >
+                    How It Works
+                  </a>
+                  <span className="pointer-events-none absolute left-3 right-3 -bottom-0.5 h-[2px] bg-gradient-to-r from-homesnapper-teal to-homesnapper-orange scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                </div>
+                <div className="relative group">
+                  <a
+                    href="#reviews"
+                    className="px-3 py-2 text-lg font-semibold text-homesnapper-teal transition-colors"
+                  >
+                    Reviews
+                  </a>
+                  <span className="pointer-events-none absolute left-3 right-3 -bottom-0.5 h-[2px] bg-gradient-to-r from-homesnapper-teal to-homesnapper-orange scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                </div>
+                <div className="relative group">
+                  <a
+                    href="#faq"
+                    className="px-3 py-2 text-lg font-semibold text-homesnapper-teal transition-colors"
+                  >
+                    FAQ
+                  </a>
+                  <span className="pointer-events-none absolute left-3 right-3 -bottom-0.5 h-[2px] bg-gradient-to-r from-homesnapper-teal to-homesnapper-orange scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
+                </div>
+                <Button
+                  className="ml-3 px-5 py-2 rounded-full font-semibold text-white shadow-sm hover:opacity-95 transition"
+                  style={{ backgroundColor: colors.orange }}
+                >
+                  Submit Property
                 </Button>
               </div>
             </div>
             <div className="md:hidden">
-              <Button className="px-4 py-2 rounded-lg font-semibold text-white" 
-                      style={{backgroundColor: colors.orange}}>
-                Submit Property
+              <Button className="px-4 py-2 rounded-full font-semibold text-white" style={{ backgroundColor: colors.orange }}>
+                Submit
               </Button>
             </div>
           </div>
         </div>
+        <div className="h-[3px] bg-gradient-to-r from-homesnapper-teal via-homesnapper-gold to-homesnapper-orange" />
       </nav>
 
       {/* Hero Section - Clean and Professional */}
