@@ -10,8 +10,12 @@ dist/
 downloads/
 eggs/
 .eggs/
+# Python build output
 lib/
 lib64/
+
+# Allow React frontend utility library directory
+!frontend/src/lib/
 parts/
 sdist/
 var/
