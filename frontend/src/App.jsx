@@ -4,6 +4,15 @@ import { Card, CardContent } from '@/components/ui/card.jsx'
 import { Camera, MapPin, Gift, PoundSterling, Users, Star, ChevronRight, Award, Eye, Home } from 'lucide-react'
 import homesnapperLogo from './assets/homesnapper-logo.png'
 import './App.css'
+import SubmitPropertyModal from '@/components/SubmitPropertyModal.jsx'
+import MobileStickyBar from '@/components/MobileStickyBar.jsx'
+import WalletPanel from '@/components/WalletPanel.jsx'
+import ReferralsPanel from '@/components/ReferralsPanel.jsx'
+import LeaderboardPanel from '@/components/LeaderboardPanel.jsx'
+import BountiesPanel from '@/components/BountiesPanel.jsx'
+import SubmissionsPanel from '@/components/SubmissionsPanel.jsx'
+import TrustStrip from '@/components/TrustStrip.jsx'
+import { applyReferralIfPresent, ensureReferralCode, loadState, saveState } from '@/lib/state.js'
 
 function App() {
   const colors = {
@@ -14,9 +23,30 @@ function App() {
     lightGrey: '#F7FAFC',
     white: '#FFFFFF'
   }
+  const [submitOpen, setSubmitOpen] = useState(false)
+
+  useEffect(() => {
+    const s = applyReferralIfPresent(ensureReferralCode(loadState()))
+    saveState(s)
+  }, [])
+
+  // Fallback fix for garbled currency symbols in static copy on some systems
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    const root = document.getElementById('root')
+    if (!root) return
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
+    const nodes = []
+    while (walker.nextNode()) nodes.push(walker.currentNode)
+    nodes.forEach((n) => {
+      if (n.nodeValue && n.nodeValue.includes('A�')) {
+        n.nodeValue = n.nodeValue.replaceAll('A�', '£')
+      }
+    })
+  }, [submitOpen])
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white pb-24 md:pb-0">
       {/* Navigation */}
       <nav 
         className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b shadow-[0_2px_12px_rgba(0,0,0,0.06)]"
@@ -62,13 +92,14 @@ function App() {
                 <Button
                   className="ml-3 px-5 py-2 rounded-full font-semibold text-white shadow-sm hover:opacity-95 transition"
                   style={{ backgroundColor: colors.orange }}
+                  onClick={() => setSubmitOpen(true)}
                 >
                   Submit Property
                 </Button>
               </div>
             </div>
             <div className="md:hidden">
-              <Button className="px-4 py-2 rounded-full font-semibold text-white" style={{ backgroundColor: colors.orange }}>
+              <Button className="px-4 py-2 rounded-full font-semibold text-white" style={{ backgroundColor: colors.orange }} onClick={() => setSubmitOpen(true)}>
                 Submit
               </Button>
             </div>
@@ -76,6 +107,7 @@ function App() {
         </div>
         <div className="h-[3px] bg-gradient-to-r from-homesnapper-teal via-homesnapper-gold to-homesnapper-orange" />
       </nav>
+      <TrustStrip />
 
       {/* Hero Section - Clean and Professional */}
       <section className="relative py-20 lg:py-32 overflow-hidden" 
@@ -117,16 +149,18 @@ function App() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button className="text-lg font-semibold px-8 py-4 rounded-lg text-white hover:opacity-90 transition-opacity shadow-lg" 
-                        style={{backgroundColor: colors.orange}}>
+                        style={{backgroundColor: colors.orange}} onClick={() => setSubmitOpen(true)}>
                   <Camera className="mr-2 h-5 w-5" />
                   Submit a Property Now
                 </Button>
                 
-                <Button className="text-lg font-semibold px-8 py-4 rounded-lg border-2 border-white text-white hover:bg-white hover:text-gray-900 transition-colors" 
-                        style={{backgroundColor: 'transparent'}}>
-                  <Eye className="mr-2 h-5 w-5" />
-                  Learn How It Works
-                </Button>
+                <a href="#how-it-works" className="inline-block">
+                  <Button className="text-lg font-semibold px-8 py-4 rounded-lg border-2 border-white text-white hover:bg-white hover:text-gray-900 transition-colors" 
+                          style={{backgroundColor: 'transparent'}}>
+                    <Eye className="mr-2 h-5 w-5" />
+                    Learn How It Works
+                  </Button>
+                </a>
               </div>
             </div>
 
@@ -179,7 +213,7 @@ function App() {
       </section>
 
       {/* How It Works Section - Clean and Clear */}
-      <section id="how-it-works" className="py-20 bg-gray-50">
+      <section id="how-it-works" className="py-20 bg-gray-50" style={{ scrollMarginTop: '96px' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{color: colors.teal}}>
@@ -255,12 +289,27 @@ function App() {
 
           <div className="text-center mt-12">
             <Button className="text-lg font-semibold px-8 py-4 rounded-lg text-white hover:opacity-90 transition-opacity shadow-lg" 
-                    style={{backgroundColor: colors.orange}}>
+                    style={{backgroundColor: colors.orange}} onClick={() => setSubmitOpen(true)}>
               Start Spotting Properties
             </Button>
           </div>
         </div>
       </section>
+
+      {/* Coverage & Bounties */}
+      <BountiesPanel />
+
+      {/* Track submissions */}
+      <SubmissionsPanel />
+
+      {/* Wallet & payouts */}
+      <WalletPanel />
+
+      {/* Referrals */}
+      <ReferralsPanel />
+
+      {/* Leaderboard */}
+      <LeaderboardPanel />
 
       {/* Social Proof Section */}
       <section id="reviews" className="py-20 bg-white">
@@ -365,12 +414,16 @@ function App() {
             communities across the UK.
           </p>
           <Button className="text-xl font-semibold px-10 py-5 rounded-lg bg-white hover:bg-gray-100 transition-colors shadow-lg" 
-                  style={{color: colors.teal}}>
+                  style={{color: colors.teal}} onClick={() => setSubmitOpen(true)}>
             <Camera className="mr-3 h-6 w-6" />
             Submit Your First Property
           </Button>
         </div>
       </section>
+
+      {/* Submit Modal & Mobile Sticky */}
+      <SubmitPropertyModal open={submitOpen} onOpenChange={setSubmitOpen} />
+      <MobileStickyBar onSubmitClick={() => setSubmitOpen(true)} />
 
       {/* Footer */}
       <footer className="py-16 bg-gray-900 text-white">
@@ -385,7 +438,7 @@ function App() {
             <div>
               <h3 className="text-lg font-semibold mb-4">How It Works</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Submit a Property</a></li>
+                <li><a href="#" onClick={(e)=>{e.preventDefault();setSubmitOpen(true);}} className="hover:text-white transition-colors">Submit a Property</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Track Your Submissions</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Earn Rewards</a></li>
               </ul>
