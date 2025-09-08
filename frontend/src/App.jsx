@@ -110,12 +110,37 @@ function App() {
       <TrustStrip />
 
       {/* Hero Section - Clean and Professional */}
-      <section className="relative py-20 lg:py-32 overflow-hidden" 
-               style={{
-                 backgroundImage: `linear-gradient(135deg, rgba(30,106,129,0.9) 0%, rgba(37,99,235,0.65) 100%), url(https://source.unsplash.com/1600x900/?terraced,street,london)`,
-                 backgroundSize: 'cover',
-                 backgroundPosition: 'center'
-               }}>
+      <section className="relative py-20 lg:py-32 overflow-hidden">
+        {/* Responsive hero image with gradient overlay for readability */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10">
+          <picture>
+            <source
+              media="(min-width: 1024px)"
+              srcSet="https://source.unsplash.com/2000x1125/?terraced,street,london 2000w, https://source.unsplash.com/1600x900/?terraced,street,london 1600w"
+              sizes="100vw"
+            />
+            <source
+              media="(min-width: 640px)"
+              srcSet="https://source.unsplash.com/1200x675/?terraced,street,london 1200w, https://source.unsplash.com/1024x576/?terraced,street,london 1024w"
+              sizes="100vw"
+            />
+            <img
+              src="https://source.unsplash.com/640x360/?terraced,street,london"
+              srcSet="https://source.unsplash.com/640x360/?terraced,street,london 640w, https://source.unsplash.com/768x432/?terraced,street,london 768w"
+              sizes="100vw"
+              alt=""
+              className="w-full h-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(135deg, rgba(30,106,129,0.9) 0%, rgba(37,99,235,0.65) 100%)'
+            }}
+          />
+        </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
