@@ -111,7 +111,11 @@ function App() {
 
       {/* Hero Section - Clean and Professional */}
       <section className="relative py-20 lg:py-32 overflow-hidden" 
-               style={{background: `linear-gradient(135deg, ${colors.teal} 0%, #2563eb 100%)`}}>
+               style={{
+                 backgroundImage: `linear-gradient(135deg, rgba(30,106,129,0.9) 0%, rgba(37,99,235,0.65) 100%), url(https://source.unsplash.com/1600x900/?terraced,street,london)`,
+                 backgroundSize: 'cover',
+                 backgroundPosition: 'center'
+               }}>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -161,6 +165,13 @@ function App() {
                     Learn How It Works
                   </Button>
                 </a>
+              </div>
+
+              {/* Photo strip for context */}
+              <div className="mt-8 grid grid-cols-3 gap-3 max-w-md">
+                <img src="https://source.unsplash.com/400x300/?derelict,house" alt="Derelict house exterior" className="w-full h-24 object-cover rounded-md border" loading="lazy" />
+                <img src="https://source.unsplash.com/400x300/?taking,photo,street" alt="Taking a photo from the pavement" className="w-full h-24 object-cover rounded-md border" loading="lazy" />
+                <img src="https://source.unsplash.com/400x300/?sold,sign,house" alt="Sold sign outside a home" className="w-full h-24 object-cover rounded-md border" loading="lazy" />
               </div>
             </div>
 
