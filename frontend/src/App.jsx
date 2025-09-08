@@ -110,9 +110,11 @@ function App() {
       <TrustStrip />
 
       {/* Hero Section - Clean and Professional */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
+      <section className="relative py-20 lg:py-32 overflow-hidden" style={{
+        background: 'linear-gradient(135deg, rgba(30,106,129,0.9) 0%, rgba(37,99,235,0.65) 100%)'
+      }}>
         {/* Responsive hero image with gradient overlay for readability */}
-        <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <div aria-hidden="true" className="absolute inset-0 z-0">
           <picture>
             <source
               media="(min-width: 1024px)"
@@ -134,15 +136,12 @@ function App() {
               decoding="async"
             />
           </picture>
-          <div
-            className="absolute inset-0"
-            style={{
-              background: 'linear-gradient(135deg, rgba(30,106,129,0.9) 0%, rgba(37,99,235,0.65) 100%)'
-            }}
-          />
+          <div className="absolute inset-0 z-10 pointer-events-none" style={{
+            background: 'linear-gradient(135deg, rgba(30,106,129,0.9) 0%, rgba(37,99,235,0.65) 100%)'
+          }} />
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
             {/* Left Column - Content */}
